@@ -1,19 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap');
 
-* { 
-  margin: 0;
-  padding: 0;
+* {
   box-sizing: border-box;
   font-family: 'Open Sans', sans-serif;
 }
-
-h1{
-  margin: 10px;
-  padding: 10px;
-  align-items: center;
-  justify-content: center;
-}
-
 
 #add-product-form {
   position: relative;
@@ -30,11 +20,11 @@ h1{
 }
 
 #add-product-form .form-element:nth-child(3) > .element > input {
-  width: 80px;
+  width: 60px;
 }
 
 #add-product-form .form-element:nth-child(5) > .element > input {
-  width: 80px;
+  width: 60px;
 }
 
 .form-element {
@@ -52,7 +42,7 @@ h1{
 
 .form-element > .element {
   position: relative;
-  width: 120px;
+  width: 100px;
   display: inline-block;
 }
 
@@ -69,12 +59,12 @@ h1{
   padding: 10px;
   display: block;
   margin-top: 2px;
-  width: 800px;
+  width: 850px;
 }
 
 .product > .name {
   position: relative;
-  width: 365px;
+  width: 320px;
   display: inline-block;
 }
 
@@ -111,4 +101,40 @@ h1{
   width: 50px;
   text-align: center;
   display: inline-block;
+}
+
+.product > .discount {
+  position: relative;
+  width: 65px;
+  display: inline-block;
+}
+
+.product > .discount > input {
+  width: 60px;
+}
+
+.product-btn {
+  position: relative;
+  width: 160px;
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid;
+  cursor: pointer;
+  background-color: rgb(239, 224, 208);
+  display: inline-block;
+}
+
+.book-btn {
+  font-size: 40px;
+}
+
+.btn-label {
+  position: absolute;
+  top: 12px;
+  left: 65px;
+  font-size: 28px;
+}
+
+.hide-fields {
+  display: none;
 }

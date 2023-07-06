@@ -1,76 +1,44 @@
+import { nameSymbol, descriptionSymbol } from './protectedKeys';
+
 class Product {
-    constructor(name, cost, acceptingOrders, quantity, description) {
-      this.name = name;
-      this.cost = cost;
-      this.acceptingOrders = acceptingOrders;
-      this.quantity = quantity;
-      this.description = description;
-    }
-    stockCost() {
-      return this.cost * this.quantity;
-    }
-    getDesc() {
-      return this.description;
-    }
-    render() {
-      const productCard = document.createElement('div');
-      productCard.setAttribute('class', 'product');
-  
-      const nameDiv = document.createElement('div');
-      nameDiv.setAttribute('class', 'name');
-  
-      const costDiv = document.createElement('div');
-      costDiv.setAttribute('class', 'cost');
-  
-      const quantityDiv = document.createElement('div');
-      quantityDiv.setAttribute('class', 'quantity');
-  
-      const stockCost = document.createElement('div');
-      stockCost.setAttribute('class', 'stock-cost');
-  
-      const stockBtn = document.createElement('button');
-      stockBtn.innerText = 'Stock Cost';
-      stockBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        let fetchCost = this.stockCost();
-        alert(`Total Cost: $${fetchCost}`);
-      });
-      stockCost.append(stockBtn);
-  
-      const viewDescDiv = document.createElement('div');
-      viewDescDiv.setAttribute('class', 'view-description');
-  
-      const viewDescBtn = document.createElement('button');
-      viewDescBtn.innerText = 'Description';
-      viewDescBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        let fetchDesc = this.getDesc();
-        alert(`Description: ${fetchDesc}`);
-      });
-      viewDescDiv.append(viewDescBtn);
-  
-      const buyBtnDiv = document.createElement('div');
-      buyBtnDiv.setAttribute('class', 'buy-btn');
-  
-      const buyBtn = document.createElement('button');
-      buyBtn.innerText = 'Buy';
-      buyBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        alert(`Buying ${this.name}`);
-      });
-      if (this.quantity > 0 && this.acceptingOrders === 'No') {
-        buyBtn.setAttribute('disabled', true);
-      }
-      buyBtnDiv.append(buyBtn);
-  
-      nameDiv.innerText = this.name;
-      costDiv.innerText = `$${this.cost}`;
-      quantityDiv.innerText = `${this.quantity} unit(s)`;
-      productCard.append(nameDiv, costDiv, quantityDiv, stockCost, viewDescDiv, buyBtnDiv);
-  
-      return productCard;
-    }
+  #cost;
+  #acceptingOrders;
+  #quantity;
+  #discount = 0;
+  static #tax = 10;
+  constructor(name, cost, acceptingOrders, quantity, description) {
+    this[nameSymbol] = name;
+    this.#cost = cost;
+    this.#acceptingOrders = acceptingOrders;
+    this.#quantity = quantity;
+    this[descriptionSymbol] = description;
   }
-  
-  export default Product;
-  
+  #computeTax() {
+    return (Product.#tax / 100) * this.#cost;
+  }
+  get getName() {
+    return this[nameSymbol];
+  }
+  get getCost() {
+    return this.#cost;
+  }
+  get getDescription() {
+    return this[descriptionSymbol];
+  }
+  get getAcceptingOrders() {
+    return this.#acceptingOrders;
+  }
+  get getQuantity() {
+    return this.#quantity;
+  }
+  get stockCost() {
+    let stockCost = this.#computeTax() + this.#cost * this.#quantity;
+    let discAmt = (this.#discount / 100) * stockCost;
+    return this.discount !== 0 ? stockCost - discAmt : stockCost;
+  }
+  set setDiscount(x) {
+    this.#discount = x;
+  }
+}
+
+export default Product;
